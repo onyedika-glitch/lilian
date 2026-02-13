@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Lilian ❤️</title>
+<title>Lilian ❤️</title>
 <style>
     body {
         margin: 0;
         padding: 0;
         font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff4e8a);
+        background: linear-gradient(135deg, #ff4e8a, #ff758c, #ff7eb3);
         height: 100vh;
         display: flex;
         justify-content: center;
@@ -17,103 +17,139 @@
         text-align: center;
         color: white;
         overflow: hidden;
-        cursor: pointer;
     }
 
     .container {
-        padding: 50px;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 40px;
         border-radius: 20px;
-        text-align: center;
-        max-width: 500px;
-        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        max-width: 400px;
+        position: relative;
     }
 
     h1 {
-        font-size: 32px;
+        font-size: 28px;
         margin-bottom: 20px;
     }
 
     p {
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 30px;
-        line-height: 1.5;
     }
 
-    .heart, .sparkle {
-        position: absolute;
-        font-size: 25px;
-        animation: floatUp 4s linear forwards;
-        pointer-events: none;
+    button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s ease;
     }
 
-    .sparkle {
+    .yes {
+        background: white;
+        color: #ff4e8a;
+        font-weight: bold;
         font-size: 20px;
+        transform: scale(1);
     }
 
-    @keyframes floatUp {
-        0% { transform: translateY(0) scale(1); opacity: 1; }
-        100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    .no {
+        background: #ff4e8a;
+        color: white;
+        position: absolute;
+    }
+
+    .message {
+        position: absolute;
+        top: -50px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        animation: fadeInOut 1.5s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(0); }
+        20% { opacity: 1; transform: translateY(-10px); }
+        80% { opacity: 1; transform: translateY(-10px); }
+        100% { opacity: 0; transform: translateY(-20px); }
     }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>For Lilian ❤️</h1>
-    <p>
-        You just made my heart overflow with joy.  
-        Saying yes has made this Valentine’s Day unforgettable.  
-        I promise to cherish every moment with you, to laugh with you,  
-        and to make every day brighter just by being together.  
-        You are my dream, my happiness, and everything I could ever wish for.  
-        Thank you for being my Valentine. ❤️
-    </p>
+    <h1>Lilian 💕</h1>
+    <p>Will you be my Valentine?</p>
+
+    <button class="yes" id="yesBtn" onclick="goToYesPage()">YES ❤️</button>
+    <button class="no" id="noBtn">NO 😅</button>
+
+    <div class="message" id="msg"></div>
 </div>
 
-<audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-// Create floating hearts
-function createHeart(x, y) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = x + "px";
-    heart.style.top = y + "px";
-    heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
+let scale = 1;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const msg = document.getElementById("msg");
+
+// Hybrid Naija + English funny/romantic begging messages for Lilian
+const beggingMessages = [
+    "Please baby, just say yes 😪",
+    "Don't leave me hanging like this 😪😭",
+    "Omo, say yes naa 😔",
+    "I promise it will be fun if you say yes 😍",
+    "Baby, you know you want to say yes 😉",
+    "I can't stop thinking about you, please say yes ❤️",
+    "Just one click, and make me happy 😭",
+    "You made my day already, don't stop now 😌",
+    "Please don't make me suffer today 😢",
+    "Say yes baby, I beg you 😍"
+];
+
+// Show initial message on page load
+window.onload = () => {
+    const msgText = "Please baby, just say YES 😪";
+    msg.innerText = msgText;
+    msg.style.opacity = 1;
+    setTimeout(() => { msg.style.opacity = 0; }, 2000);
+};
+
+function moveNoButton() {
+    const container = document.querySelector(".container");
+    const rect = container.getBoundingClientRect();
+
+    // Move the NO button randomly inside container
+    const x = Math.random() * (rect.width - 100);
+    const y = Math.random() * (rect.height - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // Grow YES button
+    scale += 0.2;
+    yesBtn.style.transform = "scale(" + scale + ")";
+
+    // Show random begging message
+    const msgText = beggingMessages[Math.floor(Math.random() * beggingMessages.length)];
+    msg.innerText = msgText;
+    msg.style.opacity = 1;
+
+    // Hide after 1.5 seconds
+    setTimeout(() => { msg.style.opacity = 0; }, 1500);
 }
 
-// Create floating sparkles
-function createSparkle(x, y) {
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.innerHTML = "✨";
-    sparkle.style.left = x + "px";
-    sparkle.style.top = y + "px";
-    sparkle.style.animationDuration = (Math.random() * 2 + 2) + "s";
-    document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 4000);
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+function goToYesPage() {
+    window.location.href = "yes.html";
 }
-
-// Continuous hearts floating in background
-setInterval(() => {
-    const x = Math.random() * window.innerWidth;
-    const y = window.innerHeight + 20;
-    createHeart(x, y);
-}, 500);
-
-// On click, spawn hearts & sparkles at click position
-document.body.addEventListener("click", (e) => {
-    for (let i = 0; i < 5; i++) {
-        createHeart(e.clientX + (Math.random()*50-25), e.clientY + (Math.random()*50-25));
-        createSparkle(e.clientX + (Math.random()*50-25), e.clientY + (Math.random()*50-25));
-    }
-});
 </script>
 
 </body>
