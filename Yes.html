@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Lilian ❤️</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff4e8a);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .container {
+        padding: 50px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 20px;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+
+    .heart, .sparkle {
+        position: absolute;
+        font-size: 25px;
+        animation: floatUp 4s linear forwards;
+        pointer-events: none;
+    }
+
+    .sparkle {
+        font-size: 20px;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>For Lilian ❤️</h1>
+    <p>
+        You just made my heart overflow with joy.  
+        Saying yes has made this Valentine’s Day unforgettable.  
+        I promise to cherish every moment with you, to laugh with you,  
+        and to make every day brighter just by being together.  
+        You are my dream, my happiness, and everything I could ever wish for.  
+        Thank you for being my Valentine. ❤️
+    </p>
+</div>
+
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Create floating hearts
+function createHeart(x, y) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+    heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+}
+
+// Create floating sparkles
+function createSparkle(x, y) {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.innerHTML = "✨";
+    sparkle.style.left = x + "px";
+    sparkle.style.top = y + "px";
+    sparkle.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 4000);
+}
+
+// Continuous hearts floating in background
+setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = window.innerHeight + 20;
+    createHeart(x, y);
+}, 500);
+
+// On click, spawn hearts & sparkles at click position
+document.body.addEventListener("click", (e) => {
+    for (let i = 0; i < 5; i++) {
+        createHeart(e.clientX + (Math.random()*50-25), e.clientY + (Math.random()*50-25));
+        createSparkle(e.clientX + (Math.random()*50-25), e.clientY + (Math.random()*50-25));
+    }
+});
+</script>
+
+</body>
+</html>
